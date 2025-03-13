@@ -7,7 +7,6 @@ import com.reliaquest.api.util.ResponseUtil;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,7 +40,7 @@ public class EmployeeService {
         List<Employee> employees = fetchAllEmployees();
         List<Employee> matchedEmployees = employees.stream()
                 .filter(employee -> employee.getEmployee_name().toLowerCase().contains(nameToSearch.toLowerCase()))
-                .collect(Collectors.toList());
+                .toList();
         log.info("Found {} employees matching name: {}", matchedEmployees.size(), nameToSearch);
         return matchedEmployees;
     }
@@ -69,7 +68,7 @@ public class EmployeeService {
         List<String> topTenEarners = priorityQueue.stream()
                 .sorted(Comparator.comparingInt(Employee::getEmployee_salary).reversed())
                 .map(Employee::getEmployee_name)
-                .collect(Collectors.toList());
+                .toList();
 
         log.info("Top 10 earners: {}", topTenEarners);
         return topTenEarners;
